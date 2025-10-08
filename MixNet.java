@@ -7,6 +7,7 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
+@SuppressWarnings("unused")
 public class MixNet {
     private SecretKey secretKey;
 public MixNet() throws Exception {

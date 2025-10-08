@@ -10,10 +10,10 @@ public class Loginform extends JFrame {
     private JTextField usernameField;
     private JPasswordField passwordField;
 
-    private cce_final_proj.TransactionalVotingSystem votingSystem;
+    private TransactionalVotingSystem votingSystem;
 
 // constructor for the login form
-    public Loginform(cce_final_proj.TransactionalVotingSystem votingSystem) {
+    public Loginform(TransactionalVotingSystem votingSystem) {
         this.votingSystem = votingSystem;
         setTitle("Sign In");
         setSize(400, 220);
@@ -71,7 +71,7 @@ public class Loginform extends JFrame {
 
         if (authenticate(username, password)) {
         // Ensure the voter exists in memory
-        votingSystem.registeredVoters.putIfAbsent(username, new cce_final_proj.Voter(username));
+        votingSystem.registeredVoters.putIfAbsent(username, new TransactionalVotingSystem.Voter(username));
         // Update hasVoted status from votes.csv
         updateVoterStatusFromVotes();
 
@@ -149,11 +149,11 @@ public class Loginform extends JFrame {
             String[] data = line.split(",");
             if (data.length >= 2) {
                 String voterId = data[0].trim();
-                cce_final_proj.Voter voter = votingSystem.registeredVoters.get(voterId);
+                TransactionalVotingSystem.Voter voter = votingSystem.registeredVoters.get(voterId);
                 if (voter != null) {
                     voter.hasVoted = true;
                 } else {
-                    voter = new cce_final_proj.Voter(voterId);
+                    voter = new TransactionalVotingSystem.Voter(voterId);
                     voter.hasVoted = true;
                     votingSystem.registeredVoters.put(voterId, voter);
                 }   
@@ -166,7 +166,7 @@ public class Loginform extends JFrame {
 
    public static void main(String[] args) {
     SwingUtilities.invokeLater(() -> {
-        cce_final_proj.TransactionalVotingSystem votingSystem = new cce_final_proj.TransactionalVotingSystem();
+        TransactionalVotingSystem votingSystem = new TransactionalVotingSystem();
         new Loginform(votingSystem).setVisible(true);
     });
 }

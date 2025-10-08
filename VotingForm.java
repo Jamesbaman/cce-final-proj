@@ -16,8 +16,8 @@ public class VotingForm extends JFrame {
     private String voterUsername;
   
     // constructor for the voting form
-    private cce_final_proj.TransactionalVotingSystem votingSystem;
-    public VotingForm(String username, cce_final_proj.TransactionalVotingSystem votingSystem) {
+    private TransactionalVotingSystem votingSystem;
+    public VotingForm(String username, TransactionalVotingSystem votingSystem) {
     this.votingSystem = votingSystem;
     tpc = new TwoPhaseCommit(); // (2pc) reads existing votes
     try {
@@ -131,7 +131,7 @@ public class VotingForm extends JFrame {
     }
 
   Map<String, Integer> counts = new HashMap<>();
-for (cce_final_proj.Candidate c : votingSystem.candidates) {
+for (TransactionalVotingSystem.Candidate c : votingSystem.candidates) {
     counts.put(c.name, 0);
 }
 

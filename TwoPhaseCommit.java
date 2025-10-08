@@ -49,14 +49,15 @@ public class TwoPhaseCommit {
     }
 
     private boolean commit(String voterID, String candidate) {
-        try (FileWriter fw = new FileWriter(voteFile, true)) {
-            fw.write(voterID + "," + candidate + "\n");
-            votedUsers.add(voterID);
-            return true;
-        } catch (IOException e) {
-            return false;
-        }
+    try (FileWriter fw = new FileWriter(voteFile, true)) {
+        String timestamp = new java.text.SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy").format(new Date());
+        fw.write(voterID + "," + candidate + "," + timestamp + "\n");
+        votedUsers.add(voterID);
+        return true;
+    } catch (IOException e) {
+        return false;
     }
+}
 
     private void rollback(String voterID) {
         // Optional rollback mechanism (e.g., remove invalid writes)
