@@ -1,8 +1,7 @@
-//ignore sa ang package
+// ignore sa ang package
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileWriter;
@@ -10,30 +9,24 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.Scanner;
 
-
 public class cce_final_proj {
 
-
     // MAIN FRAME
-
     public static class OnlineVotingSystem extends JFrame {
-        private CardLayout cardLayout;
-        private JPanel mainPanel;
-        private JPanel homePanel;
-        private JPanel loginPanel;
         private JPanel sidebarPanel, headerPanel, mainContentPanel;
         private JButton signInButton, registerButton, devButton, voteTallyButton;
         private JLabel welcomeLabel, forgotPasswordLabel, profileLabel;
-        // Create transactional voting object
         private TransactionalVotingSystem votingSystem;
-        // constructor
+
         public OnlineVotingSystem(TransactionalVotingSystem votingSystem) {
             this.votingSystem = votingSystem;
-            votingSystem.mainFrame = this; // pass reference
+            votingSystem.mainFrame = this;
+
             setTitle("Online Voting System");
             setSize(1200, 800);
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             setLocationRelativeTo(null);
+
             initializeComponents();
             setupLayout();
             configureComponents();
@@ -55,105 +48,7 @@ public class cce_final_proj {
         }
 
         private JPanel homePanel;
-        private void setupLayout() {
-            // Use CardLayout for switching pages
-            cardLayout = new CardLayout();
-            mainPanel = new JPanel(cardLayout);
-            add(mainPanel, BorderLayout.CENTER);
 
-            // ========== 🏠 HOME PANEL ==========
-            homePanel = new JPanel(new GridBagLayout());
-            homePanel.setBackground(new Color(45, 45, 45));
-            GridBagConstraints gbc = new GridBagConstraints();
-            gbc.gridx = 0;
-            gbc.anchor = GridBagConstraints.CENTER;
-            gbc.insets = new Insets(15, 10, 15, 10);
-
-            welcomeLabel.setFont(new Font("Arial", Font.BOLD, 72));
-            welcomeLabel.setForeground(Color.WHITE);
-            gbc.gridy = 0;
-            homePanel.add(welcomeLabel, gbc);
-
-            JLabel descriptionLabel = new JLabel("<html><div style='text-align: center; width:600px; color:white;'>"
-                    + "This site ensures a secure and transparent way to cast votes. "
-                    + "Each vote is recorded as a transaction in a digital ledger protected by a Mix net based Algorithm."
-                    + "</div></html>");
-            descriptionLabel.setFont(new Font("Arial", Font.PLAIN, 16));
-            gbc.gridy = 1;
-            homePanel.add(descriptionLabel, gbc);
-
-            signInButton.setPreferredSize(new Dimension(400, 60));
-            signInButton.setBackground(new Color(70, 130, 180));
-            signInButton.setForeground(Color.WHITE);
-            signInButton.setFont(new Font("Arial", Font.BOLD, 20));
-            gbc.gridy = 2;
-            homePanel.add(signInButton, gbc);
-
-            registerButton.setPreferredSize(new Dimension(400, 60));
-            registerButton.setBackground(new Color(34, 139, 34));
-            registerButton.setForeground(Color.WHITE);
-            registerButton.setFont(new Font("Arial", Font.BOLD, 20));
-            gbc.gridy = 3;
-            homePanel.add(registerButton, gbc);
-
-            forgotPasswordLabel.setForeground(Color.RED);
-            forgotPasswordLabel.setFont(new Font("Arial", Font.PLAIN, 14));
-            gbc.gridy = 4;
-            homePanel.add(forgotPasswordLabel, gbc);
-
-            // ========== 🔐 LOGIN PANEL ==========
-            loginPanel = new JPanel(new GridBagLayout());
-            loginPanel.setBackground(new Color(230, 230, 230));
-            GridBagConstraints lgbc = new GridBagConstraints();
-            lgbc.gridx = 0;
-            lgbc.insets = new Insets(10, 10, 10, 10);
-
-            JLabel loginTitle = new JLabel("SIGN IN");
-            loginTitle.setFont(new Font("Arial", Font.BOLD, 36));
-            lgbc.gridy = 0;
-            loginPanel.add(loginTitle, lgbc);
-
-            JTextField usernameField = new JTextField(20);
-            JPasswordField passwordField = new JPasswordField(20);
-            JButton loginBtn = new JButton("Login");
-            JButton backBtn = new JButton("Back");
-
-            lgbc.gridy = 1;
-            loginPanel.add(new JLabel("Username:"), lgbc);
-            lgbc.gridy = 2;
-            loginPanel.add(usernameField, lgbc);
-            lgbc.gridy = 3;
-            loginPanel.add(new JLabel("Password:"), lgbc);
-            lgbc.gridy = 4;
-            loginPanel.add(passwordField, lgbc);
-            lgbc.gridy = 5;
-            loginPanel.add(loginBtn, lgbc);
-            lgbc.gridy = 6;
-            loginPanel.add(backBtn, lgbc);
-
-            // Add both panels to CardLayout
-            mainPanel.add(homePanel, "Home");
-            mainPanel.add(loginPanel, "Login");
-
-            // Default to home
-            cardLayout.show(mainPanel, "Home");
-
-            // ========== BUTTON ACTIONS ==========
-            signInButton.addActionListener(e -> cardLayout.show(mainPanel, "Login"));
-            backBtn.addActionListener(e -> cardLayout.show(mainPanel, "Home"));
-
-            loginBtn.addActionListener(e -> {
-                String username = usernameField.getText();
-                String password = new String(passwordField.getPassword());
-
-                // TODO: Replace this with actual authentication (database or file)
-                if (username.equals("admin") && password.equals("1234")) {
-                    JOptionPane.showMessageDialog(this, "Login Successful!");
-                } else {
-                    JOptionPane.showMessageDialog(this, "Invalid credentials. Try again.", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            });
-        }
         private void setupLayout() {
             setLayout(new BorderLayout());
 
@@ -181,49 +76,46 @@ public class cce_final_proj {
 
             add(headerPanel, BorderLayout.NORTH);
 
-            // Main content area
-        homePanel = new JPanel(new GridBagLayout());
-        homePanel.setBackground(Color.LIGHT_GRAY);
-        GridBagConstraints gbc = new GridBagConstraints();
+            // Main content
+            homePanel = new JPanel(new GridBagLayout());
+            homePanel.setBackground(Color.LIGHT_GRAY);
+            GridBagConstraints gbc = new GridBagConstraints();
             gbc.gridx = 0;
             gbc.anchor = GridBagConstraints.CENTER;
             gbc.insets = new Insets(15, 10, 15, 10);
 
-            // Welcome label
+            // Welcome text
             welcomeLabel.setFont(new Font("Arial", Font.BOLD, 72));
             gbc.gridy = 0;
             homePanel.add(welcomeLabel, gbc);
 
-            // Description text
+            // Description
             JLabel descriptionLabel = new JLabel("<html><div style='text-align: center; width:600px;'>"
                     + "This site ensures a secure and transparent way to cast votes. "
-                    + "Each vote is recorded as a transaction in a digital ledger protected by using a Mix net based Algorithm."
+                    + "Each vote is recorded as a transaction in a digital ledger protected using a Mixnet-based Algorithm."
                     + "</div></html>");
             descriptionLabel.setFont(new Font("Arial", Font.PLAIN, 16));
             gbc.gridy = 1;
             homePanel.add(descriptionLabel, gbc);
 
-            // Sign in button
+            // Buttons
             signInButton.setPreferredSize(new Dimension(400, 60));
             gbc.gridy = 2;
             homePanel.add(signInButton, gbc);
 
-            // Register button
             registerButton.setPreferredSize(new Dimension(400, 60));
             gbc.gridy = 3;
             homePanel.add(registerButton, gbc);
 
-            // Forgot password link
             forgotPasswordLabel.setForeground(Color.RED);
             forgotPasswordLabel.setFont(new Font("Arial", Font.PLAIN, 14));
             gbc.gridy = 4;
             homePanel.add(forgotPasswordLabel, gbc);
 
-            // Wrap homePanel inside mainContentPanel
             mainContentPanel.setLayout(new BorderLayout());
             mainContentPanel.add(homePanel, BorderLayout.CENTER);
             add(mainContentPanel, BorderLayout.CENTER);
-                    }
+        }
 
         private void configureComponents() {
             registerButton.addActionListener(e -> {
@@ -231,155 +123,113 @@ public class cce_final_proj {
                 registerForm.setVisible(true);
             });
 
-            signInButton.addActionListener(new ActionListener() {
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        Loginform loginForm = new Loginform(OnlineVotingSystem.this.votingSystem);
-        loginForm.setVisible(true);
-    }
-});
+            signInButton.addActionListener(e -> {
+                Loginform loginForm = new Loginform(votingSystem);
+                loginForm.setVisible(true);
+            });
 
-voteTallyButton.addActionListener(e -> {
-    VoteTally tallyFrame = new VoteTally(votingSystem);
-    tallyFrame.setVisible(true);
-});
+            voteTallyButton.addActionListener(e -> {
+                VoteTally tallyFrame = new VoteTally(votingSystem);
+                tallyFrame.setVisible(true);
+            });
 
-// admin panel access (pass kay 123)
-devButton.addActionListener(e -> {
-    String pswd = JOptionPane.showInputDialog("Enter admin password:");
-    if ("123".equals(pswd)) { // simple password check
-    votingSystem.loadCandidatesFromFile();
-    votingSystem.loadRegisteredUsersFromFile();
-    votingSystem.loadVotesFromFile();
-    showAdminPanel(); // method to display panel
-    dispose();
-    } else {
-        JOptionPane.showMessageDialog(null, "Incorrect password!");
-    }
-});
-
-
-
+            // Admin access
+            devButton.addActionListener(e -> {
+                String pswd = JOptionPane.showInputDialog("Enter admin password:");
+                if ("123".equals(pswd)) {
+                    votingSystem.loadCandidatesFromFile();
+                    votingSystem.loadRegisteredUsersFromFile();
+                    votingSystem.loadVotesFromFile();
+                    showAdminPanel();
+                    dispose();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Incorrect password!");
+                }
+            });
         }
 
-    // admin panel
-   private void showAdminPanel() {
-    JDialog dialog = new JDialog(this, "Admin Panel", true);
-    dialog.setSize(900, 600);
-    dialog.setLocationRelativeTo(this);
-    dialog.setLayout(new BorderLayout(10, 10));
+        private void showAdminPanel() {
+            JDialog dialog = new JDialog(this, "Admin Panel", true);
+            dialog.setSize(900, 600);
+            dialog.setLocationRelativeTo(this);
+            dialog.setLayout(new BorderLayout(10, 10));
 
-
-    // Hash function for voter ID (used only in vote ledger)
-    java.util.function.Function<String, String> hashVoterId = voterId -> {
-        try {
-            java.security.MessageDigest digest = java.security.MessageDigest.getInstance("SHA-256");
-            byte[] encodedHash = digest.digest(voterId.getBytes());
-            StringBuilder hexString = new StringBuilder();
-            for (byte b : encodedHash) {
-                String hex = Integer.toHexString(0xff & b);
-                if (hex.length() == 1) hexString.append('0');
-                hexString.append(hex);
+            // Voter status table
+            String[] voterCols = {"Voter Username", "Has Voted"};
+            Object[][] voterData = new Object[votingSystem.registeredVoters.size()][2];
+            int i = 0;
+            for (Map.Entry<String, TransactionalVotingSystem.Voter> entry : votingSystem.registeredVoters.entrySet()) {
+                voterData[i][0] = entry.getKey();
+                voterData[i][1] = entry.getValue().hasVoted;
+                i++;
             }
-            return hexString.toString().substring(0, 8); // only first 8 chars
-        } catch (java.security.NoSuchAlgorithmException e) {
-            e.printStackTrace();
-            return "ERROR";
+            JTable voterTable = new JTable(voterData, voterCols);
+
+            // Ballot ledger table
+            String[] ballotCols = {"Voter ID (Hashed)", "Candidate", "Timestamp"};
+            Object[][] ballotData = new Object[votingSystem.ballotLedger.size()][3];
+            i = 0;
+            for (TransactionalVotingSystem.Ballot b : votingSystem.ballotLedger) {
+                ballotData[i][0] = b.voterId;
+                ballotData[i][1] = b.candidate;
+                ballotData[i][2] = b.timestamp.toString();
+                i++;
+            }
+            JTable ballotTable = new JTable(ballotData, ballotCols);
+
+            JPanel tablesPanel = new JPanel(new GridLayout(2, 1, 10, 10));
+            tablesPanel.add(new JScrollPane(voterTable));
+            tablesPanel.add(new JScrollPane(ballotTable));
+            dialog.add(tablesPanel, BorderLayout.CENTER);
+
+            // Add candidate section
+            JPanel addCandidatePanel = new JPanel(new FlowLayout());
+            JTextField candidateNameField = new JTextField(15);
+            JButton selectImageButton = new JButton("Select Image");
+            JLabel selectedImageLabel = new JLabel("No image selected");
+            JButton addCandidateButton = new JButton("Add Candidate");
+
+            addCandidatePanel.add(new JLabel("Candidate Name:"));
+            addCandidatePanel.add(candidateNameField);
+            addCandidatePanel.add(selectImageButton);
+            addCandidatePanel.add(selectedImageLabel);
+            addCandidatePanel.add(addCandidateButton);
+            dialog.add(addCandidatePanel, BorderLayout.NORTH);
+
+            final String[] imagePath = {null};
+            selectImageButton.addActionListener(ev -> {
+                JFileChooser fileChooser = new JFileChooser();
+                int option = fileChooser.showOpenDialog(dialog);
+                if (option == JFileChooser.APPROVE_OPTION) {
+                    imagePath[0] = fileChooser.getSelectedFile().getAbsolutePath();
+                    selectedImageLabel.setText(fileChooser.getSelectedFile().getName());
+                }
+            });
+
+            addCandidateButton.addActionListener(ev -> {
+                String name = candidateNameField.getText().trim();
+                if (name.isEmpty() || imagePath[0] == null) {
+                    JOptionPane.showMessageDialog(dialog, "Please enter a name and select an image.");
+                    return;
+                }
+                votingSystem.addCandidate(name, imagePath[0]);
+                votingSystem.saveCandidatesToFile();
+                JOptionPane.showMessageDialog(dialog, "Candidate added: " + name);
+                candidateNameField.setText("");
+                selectedImageLabel.setText("No image selected");
+            });
+
+            JButton closeBtn = new JButton("Close");
+            closeBtn.addActionListener(ev -> dialog.dispose());
+            dialog.add(closeBtn, BorderLayout.SOUTH);
+
+            dialog.setVisible(true);
         }
-    };
 
-    // Voter status table
-
-    String[] voterCols = {"Voter Username", "Has Voted"};
-    Object[][] voterData = new Object[votingSystem.registeredVoters.size()][2];
-    int i = 0;
-    for (Map.Entry<String, TransactionalVotingSystem.Voter> entry : votingSystem.registeredVoters.entrySet()) {
-        voterData[i][0] = entry.getKey();           // actual username
-        voterData[i][1] = entry.getValue().hasVoted; // true/false
-        i++;
-    }
-    JTable voterTable = new JTable(voterData, voterCols);
-
-
-    // Ballot ledger table (hashed voter ID + candidate + timestamp)
-
-    String[] ballotCols = {"Voter ID (Hashed)", "Candidate", "Timestamp"};
-    Object[][] ballotData = new Object[votingSystem.ballotLedger.size()][3];
-    i = 0;
-    for (TransactionalVotingSystem.Ballot b : votingSystem.ballotLedger) {
-        ballotData[i][0] = hashVoterId.apply(b.voterId); // hashed ID
-        ballotData[i][1] = b.candidate;
-        ballotData[i][2] = b.timestamp.toString();
-        i++;
-    }
-    JTable ballotTable = new JTable(ballotData, ballotCols);
-
-
-    // Add both tables to a panel
-
-    JPanel tablesPanel = new JPanel(new GridLayout(2, 1, 10, 10));
-    tablesPanel.add(new JScrollPane(voterTable));
-    tablesPanel.add(new JScrollPane(ballotTable));
-
-    dialog.add(tablesPanel, BorderLayout.CENTER);
-
-
-    // Add Candidate Panel
-
-    JPanel addCandidatePanel = new JPanel(new FlowLayout());
-    JTextField candidateNameField = new JTextField(15);
-    JButton selectImageButton = new JButton("Select Image");
-    JLabel selectedImageLabel = new JLabel("No image selected");
-    JButton addCandidateButton = new JButton("Add Candidate");
-
-    addCandidatePanel.add(new JLabel("Candidate Name:"));
-    addCandidatePanel.add(candidateNameField);
-    addCandidatePanel.add(selectImageButton);
-    addCandidatePanel.add(selectedImageLabel);
-    addCandidatePanel.add(addCandidateButton);
-
-    dialog.add(addCandidatePanel, BorderLayout.NORTH);
-
-    // Image selection
-    final String[] imagePath = {null};
-    selectImageButton.addActionListener(ev -> {
-        JFileChooser fileChooser = new JFileChooser();
-        int option = fileChooser.showOpenDialog(dialog);
-        if (option == JFileChooser.APPROVE_OPTION) {
-            imagePath[0] = fileChooser.getSelectedFile().getAbsolutePath();
-            selectedImageLabel.setText(fileChooser.getSelectedFile().getName());
-        }
-    });
-
-    // Add candidate action
-    addCandidateButton.addActionListener(ev -> {
-        String name = candidateNameField.getText().trim();
-        if (name.isEmpty() || imagePath[0] == null) {
-            JOptionPane.showMessageDialog(dialog, "Please enter a name and select an image.");
-            return;
-        }
-        votingSystem.addCandidate(name, imagePath[0]);
-        votingSystem.saveCandidatesToFile();
-        JOptionPane.showMessageDialog(dialog, "Candidate added: " + name);
-        candidateNameField.setText("");
-        selectedImageLabel.setText("No image selected");
-    });
-
-    // Close button
-    JButton closeBtn = new JButton("Close");
-    closeBtn.addActionListener(ev -> dialog.dispose());
-    dialog.add(closeBtn, BorderLayout.SOUTH);
-
-    dialog.setVisible(true);
-}
-
-        // Classes for transactional voting system
         public static void main(String[] args) {
             System.out.println("Current working dir: " + new File(".").getAbsolutePath());
             SwingUtilities.invokeLater(() -> {
-
-            TransactionalVotingSystem votingSystem = new
-            TransactionalVotingSystem();
+                TransactionalVotingSystem votingSystem = new TransactionalVotingSystem();
                 votingSystem.loadCandidatesFromFile();
                 votingSystem.loadVotesFromFile();
                 OnlineVotingSystem frame = new OnlineVotingSystem(votingSystem);
@@ -388,12 +238,10 @@ devButton.addActionListener(e -> {
         }
     }
 
-
     // Register Form
     public static class RegisterForm extends JFrame {
         private JTextField usernameField, emailField, firstNameField, lastNameField;
         private JPasswordField passwordField, confirmPasswordField;
-
 
         public RegisterForm() {
             setTitle("Register");
@@ -435,63 +283,65 @@ devButton.addActionListener(e -> {
             formPanel.add(new JLabel("RE-ENTER PASSWORD"));
             formPanel.add(confirmPasswordField);
 
-            JButton submitButton = new JButton("Submit");
             JButton backButton = new JButton("Back");
+            JButton submitButton = new JButton("Submit");
             formPanel.add(backButton);
             formPanel.add(submitButton);
             add(formPanel, BorderLayout.CENTER);
 
-            submitButton.addActionListener(e -> {
-                String username = usernameField.getText().trim();
-                String email = emailField.getText().trim();
-                String firstName = firstNameField.getText().trim();
-                String lastName = lastNameField.getText().trim();
-                String password = new String(passwordField.getPassword());
-                String confirmPassword = new String(confirmPasswordField.getPassword());
-
-                if (username.isEmpty() || email.isEmpty() || firstName.isEmpty() ||
-                        lastName.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-                    JOptionPane.showMessageDialog(this, "All fields must be filled!", "Error", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-
-                if (!password.equals(confirmPassword)) {
-                    JOptionPane.showMessageDialog(this, "Passwords do not match!", "Error", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                 File usersFile = new File("users.csv");
-                boolean usernameExists = false;
-             if (usersFile.exists()) {
-             try (Scanner sc = new Scanner(usersFile)) {
-                while (sc.hasNextLine()) {
-                String[] data = sc.nextLine().split(",");
-             if (data.length > 0 && data[0].trim().equalsIgnoreCase(username)) {
-                usernameExists = true;
-                break;
-                }
-            }
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, "Error reading users.csv: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        }
-
-    if (usernameExists) {
-        JOptionPane.showMessageDialog(this, "Username already exists! Choose another.", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-
-                try (FileWriter fw = new FileWriter("users.csv", true)) {
-                    fw.write(username + "," + email + "," + firstName + "," + lastName + "," + password + "\n");
-                    JOptionPane.showMessageDialog(this, "Registration successful! Data saved.");
-                    dispose();
-                } catch (IOException ex) {
-                    JOptionPane.showMessageDialog(this, "Error saving user data!", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            });
-
+            submitButton.addActionListener(e -> handleRegistration());
             backButton.addActionListener(e -> dispose());
         }
-    }
 
+        private void handleRegistration() {
+            String username = usernameField.getText().trim();
+            String email = emailField.getText().trim();
+            String firstName = firstNameField.getText().trim();
+            String lastName = lastNameField.getText().trim();
+            String password = new String(passwordField.getPassword());
+            String confirmPassword = new String(confirmPasswordField.getPassword());
+
+            if (username.isEmpty() || email.isEmpty() || firstName.isEmpty()
+                    || lastName.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "All fields must be filled!", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            if (!password.equals(confirmPassword)) {
+                JOptionPane.showMessageDialog(this, "Passwords do not match!", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            File usersFile = new File("users.csv");
+            boolean usernameExists = false;
+
+            if (usersFile.exists()) {
+                try (Scanner sc = new Scanner(usersFile)) {
+                    while (sc.hasNextLine()) {
+                        String[] data = sc.nextLine().split(",");
+                        if (data.length > 0 && data[0].trim().equalsIgnoreCase(username)) {
+                            usernameExists = true;
+                            break;
+                        }
+                    }
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(this, "Error reading users.csv: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
+
+            if (usernameExists) {
+                JOptionPane.showMessageDialog(this, "Username already exists! Choose another.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            try (FileWriter fw = new FileWriter("users.csv", true)) {
+                fw.write(username + "," + email + "," + firstName + "," + lastName + "," + password + "\n");
+                JOptionPane.showMessageDialog(this, "Registration successful! Data saved.");
+                dispose();
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this, "Error saving user data!", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
 }
