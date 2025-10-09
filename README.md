@@ -39,6 +39,14 @@ This version does not implement a database. Instead, all data is stored in .csv 
 
 • Real-time validation and confirmation of voting actions
 
+## ⚙️ How to Run the Project
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Jamesbaman/cce-final-proj.git
+   ```
+2. Open the project in your preferred IDE (e.g., NetBeans, IntelliJ IDEA).
+3. Run the `cce-final-proj.java` file.
+
 ## 🧾 Screenshots
 Screenshots are stored in the `/screenshots` folder.
 
@@ -64,6 +72,7 @@ add
 
 ## 📝 License
 This project is developed for academic purposes under the University of Mindanao, College of Computing Education.
+
 
 
 
