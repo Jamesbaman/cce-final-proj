@@ -4,10 +4,14 @@ A desktop-based Ballot Casting System built with Java Swing, designed for secure
 ## 🗳️ Project Overview   
 The Online Voting System allows users to:   
 
-• Register and manage voter accounts.  
+• Register and manage voter accounts.
+
 • Log in securely to access the voting portal.  
+
 • Cast votes electronically for available candidates.   
+
 • View vote tallies and election results.    
+
 • Allow administrators to manage candidates, view voter activity, and monitor the voting ledger.    
 
 This version does not implement a database. Instead, all data is stored in .csv files located in the /src/final_proj/data directory.
@@ -45,6 +49,7 @@ add
 
 ## 📝 License
 This project is developed for academic purposes under the University of Mindanao, College of Computing Education.
+
 
 
 
