@@ -22,6 +22,12 @@ This version does not implement a database. Instead, all data is stored in .csv 
 | Jhustine Caballero | Lead Programmer/ Framework Developer |
 | Andrei Domingo | UI Design / Documentation |
 | LJ Martin | Content Editor / Framework Coordinator |
+## UML Diagram
+
+| Diagram Type | Description | Diagram |
+|---------------|--------------|----------|
+| Use Case Diagram | Illustrates how users may interact with core system functions | ![UML Diagram](uml/UML_diagram.png) |
+
 ## 🖼️ Screenshots
 Screenshots are stored in the `/screenshots` folder.
 
@@ -41,5 +47,6 @@ add
 
 ## 📝 License
 This project is developed for academic purposes under the University of Mindanao, College of Computing Education.
+
 
 
