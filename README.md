@@ -16,6 +16,15 @@ The Online Voting System allows users to:
 
 This version does not implement a database. Instead, all data is stored in .csv files located in the /src/final_proj/data directory.
 
+## 👥 Team Members | Roles
+| Name | Role |
+|------|------|
+| Daryl Aurelio | Front-End Designer / Presenter  |
+| James David Baman | Algorithm Design / Project Overwiew Reviewer |
+| Jhustine Caballero | Lead Programmer/ Framework Developer |
+| Andrei Domingo | UI Design / Documentation |
+| LJ Martin | Content Editor / Framework Coordinator |
+
 ## Features
 
 • Secure voter registration, login, and ballot casting
@@ -30,20 +39,6 @@ This version does not implement a database. Instead, all data is stored in .csv 
 
 • Real-time validation and confirmation of voting actions
 
-## 👥 Team Members | Roles
-| Name | Role |
-|------|------|
-| Daryl Aurelio | Front-End Designer / Presenter  |
-| James David Baman | Algorithm Design / Project Overwiew Reviewer |
-| Jhustine Caballero | Lead Programmer/ Framework Developer |
-| Andrei Domingo | UI Design / Documentation |
-| LJ Martin | Content Editor / Framework Coordinator |
-## UML Diagram
-
-| Diagram Type | Description | Diagram |
-|---------------|--------------|----------|
-| Entity Relationship Diagram | Illustrates how the core system functions and the methods that support it | ![UML Diagram](uml/UML_Diagram.png) |
-
 ## 🖼️ Screenshots
 Screenshots are stored in the `/screenshots` folder.
 
@@ -52,6 +47,12 @@ Screenshots are stored in the `/screenshots` folder.
 | Welcome Page | Main panel for unregistered voters  | ![Welcome Page](screenshots/welcomepage.png) |
 | Sign In | Starting panel for authentication | ![Sign In](screenshots/signin.png) |
 | Cast Your Vote | Panel to cast your vote for a candidate  | ![Cast Your Vote](screenshots/castyourvote.png) |
+
+## UML Diagram
+
+| Diagram Type | Description | Diagram |
+|---------------|--------------|----------|
+| Entity Relationship Diagram | Illustrates how the core system functions and the methods that support it | ![UML Diagram](uml/UML_Diagram.png) |
 
 ## Pending Integration
 votes.csv needs to have further privacy functions (make it unable to be read by the devs/admin)
@@ -63,6 +64,7 @@ add
 
 ## 📝 License
 This project is developed for academic purposes under the University of Mindanao, College of Computing Education.
+
 
 
 
