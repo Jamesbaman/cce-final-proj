@@ -23,10 +23,14 @@ This version does not implement a database. Instead, all data is stored in .csv 
 | Andrei Domingo | UI Design / Documentation |
 | LJ Martin | Content Editor / Framework Coordinator |
 
-Next to be implemented:
+## Pending Integration
 votes.csv needs to have further privacy functions (make it unable to be read by the devs/admin)
 -> for now, due to testing it is visible
 Make an admin function to delete candidates
 Adjust vote tally / voting form ui to be more aesthetically pleasing
 Time complexity and Storage Complexity (show time elapsed to how the program ran in ms/nanos/etc)
 add 
+
+## 📝 License
+This project is developed for academic purposes under the University of Mindanao, College of Computing Education.
+
