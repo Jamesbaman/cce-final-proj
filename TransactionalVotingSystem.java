@@ -1,8 +1,10 @@
 import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
+import java.util.List;
 
 
 public class TransactionalVotingSystem {
@@ -179,5 +181,69 @@ public class TransactionalVotingSystem {
             JOptionPane.showMessageDialog(null, "Error loading votes.csv: " + e.getMessage());
         }
     }
+    // ====== SHOW SUMMARY PANEL ======
+    public void showSummaryPanel() {
+        if (mainFrame == null) return;
+
+        JPanel summaryPanel = new JPanel(new BorderLayout());
+        JLabel summaryLabel = new JLabel("Vote Summary", SwingConstants.CENTER);
+        summaryLabel.setFont(new Font("Arial", Font.BOLD, 28));
+        summaryPanel.add(summaryLabel, BorderLayout.NORTH);
+
+        // Build table of candidates and vote counts
+        String[] cols = {"Candidate", "Votes"};
+        Object[][] data = new Object[candidates.size()][2];
+        for (int i = 0; i < candidates.size(); i++) {
+            data[i][0] = candidates.get(i).name;
+            data[i][1] = countVotesFor(candidates.get(i).name);
+        }
+
+        JTable table = new JTable(data, cols);
+        summaryPanel.add(new JScrollPane(table), BorderLayout.CENTER);
+
+        // Replace the current content of the main frame
+        Container cp = mainFrame.getContentPane();
+        cp.removeAll();
+        cp.add(summaryPanel, BorderLayout.CENTER);
+        mainFrame.revalidate();
+        mainFrame.repaint();
+        mainFrame.setVisible(true);
+    }
+
+    // Helper method to count votes for each candidate
+    public int countVotesFor(String candidateName) {
+        int count = 0;
+        for (Ballot b : ballotLedger) {
+            if (b.candidate.equals(candidateName)) count++;
+        }
+        return count;
+    }
+    // inside TransactionalVotingSystem.java, near the bottom
+    public boolean validateLogin(String username, String password) {
+        File file = new File("users.csv");
+        if (!file.exists()) return false;
+
+        try (Scanner sc = new Scanner(file)) {
+            while (sc.hasNextLine()) {
+                String[] data = sc.nextLine().split(",");
+                if (data.length >= 2) {
+                    String user = data[0].trim();
+                    String pass = data[1].trim();
+                    if (user.equals(username) && pass.equals(password)) {
+                        return true;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error reading users.csv: " + e.getMessage());
+        }
+        return false;
+    }
+
+    public boolean hasUserVoted(String username) {
+        Voter voter = registeredVoters.get(username);
+        return voter != null && voter.hasVoted;
+    }
+
 }
 
