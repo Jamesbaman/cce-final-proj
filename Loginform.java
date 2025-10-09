@@ -1,6 +1,5 @@
 
 
-import java.util.Collections;
 import java.util.Scanner;
 import javax.swing.*;
 import java.awt.*;
@@ -84,7 +83,7 @@ public class Loginform extends JFrame {
             passwordField.setText("");
         }
     }
-private boolean authenticate(String username, String password) {
+    private boolean authenticate(String username, String password) {
     File usersFile = new File("users.csv");
     if (!usersFile.exists()) {
         JOptionPane.showMessageDialog(this, "users.csv file not found!", "Error", JOptionPane.ERROR_MESSAGE);
@@ -99,10 +98,14 @@ private boolean authenticate(String username, String password) {
             if (data.length >= 5 && data[0].trim().equals(username) && data[4].trim().equals(password)) {
                 authenticated = true;
 
-                // Populate registeredVoters for all users
+                // Populate registeredVoters map for all users
                 do {
                     String userId = data[0].trim();
-                    votingSystem.registeredVoters.putIfAbsent(userId, new TransactionalVotingSystem.Voter(userId));
+                    if (!votingSystem.registeredVoters.containsKey(userId)) {
+                        votingSystem.registerVoter(userId);
+                    } else {
+                        votingSystem.registeredVoters.get(userId).hasVoted = false; // reset before reading votes
+                    }
                 } while (sc.hasNextLine() && (data = sc.nextLine().split(",")) != null);
 
                 break;
@@ -115,31 +118,14 @@ private boolean authenticate(String username, String password) {
 
     if (!authenticated) return false;
 
-    // ✅ Decrypt IDs from votes.csv before checking hasVoted
+    // Update hasVoted based on votes.csv
     File votesFile = new File("votes.csv");
     if (votesFile.exists()) {
         try (Scanner sc = new Scanner(votesFile)) {
-            MixNet mixNet = null;
-            try {
-                mixNet = new MixNet(); // may throw Exception
-            } catch (Exception ex) {
-                mixNet = null; // fallback if MixNet cannot initialize
-            }
-
             while (sc.hasNextLine()) {
                 String[] voteData = sc.nextLine().split(",");
                 if (voteData.length >= 2) {
                     String voterId = voteData[0].trim();
-
-                    // Try decrypting if MixNet is available
-                    if (mixNet != null) {
-                        try {
-                            String decrypted = mixNet.decryptVotes(Collections.singletonList(voterId)).get(0);
-                            voterId = (decrypted != null && !decrypted.isEmpty()) ? decrypted : voterId;
-                        } catch (Exception ignored) {}
-                    }
-
-                    // Update hasVoted in memory
                     if (votingSystem.registeredVoters.containsKey(voterId)) {
                         votingSystem.registeredVoters.get(voterId).hasVoted = true;
                     }
@@ -152,36 +138,17 @@ private boolean authenticate(String username, String password) {
 
     return true;
 }
-
-private void updateVoterStatusFromVotes() {
+    private void updateVoterStatusFromVotes() {
     File file = new File("votes.csv");
     if (!file.exists()) return;
 
     try (Scanner sc = new Scanner(file)) {
-        MixNet mixNet = null;
-        try {
-            mixNet = new MixNet(); // may throw Exception
-        } catch (Exception ex) {
-            mixNet = null; // fallback: treat votes as plaintext
-        }
-
         while (sc.hasNextLine()) {
             String line = sc.nextLine().trim();
-            if (line.isEmpty()) continue;
-
+            if (line.isEmpty()) continue; // skip empty lines
             String[] data = line.split(",");
             if (data.length >= 2) {
                 String voterId = data[0].trim();
-
-                // Try decrypting
-                if (mixNet != null) {
-                    try {
-                        String decrypted = mixNet.decryptVotes(Collections.singletonList(voterId)).get(0);
-                        voterId = (decrypted != null && !decrypted.isEmpty()) ? decrypted : voterId;
-                    } catch (Exception ignored) {}
-                }
-
-                // Update or add voter in memory
                 TransactionalVotingSystem.Voter voter = votingSystem.registeredVoters.get(voterId);
                 if (voter != null) {
                     voter.hasVoted = true;
@@ -189,14 +156,13 @@ private void updateVoterStatusFromVotes() {
                     voter = new TransactionalVotingSystem.Voter(voterId);
                     voter.hasVoted = true;
                     votingSystem.registeredVoters.put(voterId, voter);
-                }
+                }   
             }
         }
     } catch (Exception e) {
         JOptionPane.showMessageDialog(this, "Error reading votes.csv: " + e.getMessage());
     }
 }
-
 
    public static void main(String[] args) {
     SwingUtilities.invokeLater(() -> {

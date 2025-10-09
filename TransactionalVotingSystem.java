@@ -111,7 +111,7 @@ public class TransactionalVotingSystem {
         registeredVoters.put(voterId, new Voter(voterId));
     }
 
-    // Cast vote castVote()
+    // Cast vote
     public boolean castVote(String voterId, String candidate) {
         Voter voter = registeredVoters.get(voterId);
         if (voter == null) {
@@ -142,88 +142,42 @@ public class TransactionalVotingSystem {
     }
 
     public void loadVotesFromFile() {
-    File file = new File("votes.csv");
-    if (!file.exists()) return;
+        File file = new File("votes.csv");
+        if (!file.exists()) return;
 
-    ballotLedger.clear();
+        ballotLedger.clear();
 
-    // Try to create MixNet so we can decrypt stored encrypted voter IDs.
-    MixNet mix = null;
-    try {
-        mix = new MixNet();
-    } catch (Exception e) {
-        // If MixNet can't be initialized, we'll treat stored IDs as plain text.
-        mix = null;
-    }
+        try (Scanner sc = new Scanner(file)) {
+            while (sc.hasNextLine()) {
+                String line = sc.nextLine().trim();
+                if (line.isEmpty()) continue;
 
-    try (Scanner sc = new Scanner(file)) {
-        while (sc.hasNextLine()) {
-            String line = sc.nextLine().trim();
-            if (line.isEmpty()) continue;
+                String[] data = line.split(",", 3);
+                if (data.length < 2) continue;
 
-            String[] data = line.split(",", 3);
-            if (data.length < 2) continue;
+                String voterId = data[0].trim();
+                String candidate = data[1].trim();
+                Date timestamp = null;
 
-            String storedId = data[0].trim(); // encrypted ID stored in votes.csv (or plain old username)
-            String candidate = data[1].trim();
-
-            Date timestamp = null;
-            if (data.length == 3 && !data[2].trim().isEmpty()) {
-                try {
-                    java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
-                    timestamp = sdf.parse(data[2].trim());
-                } catch (Exception e) {
-                    timestamp = null;
-                }
-            }
-
-            // Try to decrypt the storedId into the real username. If decryption fails,
-            // assume storedId is already the real username (backwards-compatible).
-            String realVoter = storedId;
-            if (mix != null) {
-                try {
-                    List<String> dec = mix.decryptVotes(Collections.singletonList(storedId));
-                    if (dec != null && !dec.isEmpty() && dec.get(0) != null && !dec.get(0).isEmpty()) {
-                        realVoter = dec.get(0);
+                if (data.length == 3 && !data[2].trim().isEmpty()) {
+                    try {
+                        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
+                        timestamp = sdf.parse(data[2].trim());
+                    } catch (Exception e) {
+                        timestamp = null;
                     }
-                } catch (Exception ex) {
-                    // not decryptable -> keep storedId as-is (plain username or hashed form)
-                    realVoter = storedId;
                 }
-            }
 
-            // Use the real username in-memory (do NOT change votes.csv)
-            Ballot ballot = new Ballot(realVoter, candidate);
-            ballot.timestamp = (timestamp != null) ? timestamp : new Date();
-            ballotLedger.add(ballot);
+                Ballot ballot = new Ballot(voterId, candidate);
+                ballot.timestamp = (timestamp != null) ? timestamp : new Date();
+                ballotLedger.add(ballot);
 
-            // Ensure the real user exists in registeredVoters, then mark as voted.
-            for (Map.Entry<String, Voter> entry : registeredVoters.entrySet()) {
-    if (entry.getKey().equals(realVoter)) {
-        entry.getValue().hasVoted = true;
-        break;
-    }
-}
-        }
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(null, "Error loading votes.csv: " + e.getMessage());
-    }
-}
-        public java.util.function.Function<String, String> hashVoterId = voterId -> {
-         try {
-            java.security.MessageDigest digest = java.security.MessageDigest.getInstance("SHA-256");
-            byte[] encodedHash = digest.digest(voterId.getBytes());
-            StringBuilder hexString = new StringBuilder();
-            for (byte b : encodedHash) {
-            String hex = Integer.toHexString(0xff & b);
-            if (hex.length() == 1) hexString.append('0');
-            hexString.append(hex);
+                registeredVoters.putIfAbsent(voterId, new Voter(voterId));
+                registeredVoters.get(voterId).hasVoted = true;
             }
-            return hexString.toString().substring(0, 8); // only first 8 chars
-        } catch (java.security.NoSuchAlgorithmException e) {
-            e.printStackTrace();
-            return "ERROR";
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error loading votes.csv: " + e.getMessage());
         }
-};
+    }
 }
 
