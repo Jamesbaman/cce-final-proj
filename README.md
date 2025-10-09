@@ -1,5 +1,5 @@
 # Transactional Ballot Casting Voting System
-A desktop-based Ballot Casting System built with Java Swing, designed for secure and user-friendly electronic voting. It enables users to register, log in, and cast votes while ensuring voter anonymity through a Mixnet-based algorithm that conceals the link between voters and their votes. The system employs a Two-Phase Commit (2PC) protocol to maintain data consistency across storage files, guaranteeing that each transaction is either fully completed or rolled back in case of failure. An integrated admin panel allows authorized users to manage candidates, monitor voter activity, and oversee the voting ledger. All data is stored persistently in CSV files for candidates, voters, and votes, preserving records between sessions.    
+A desktop-based Ballot Casting System built with Java Swing, designed for secure and user-friendly electronic voting. It enables users to register, log in, and cast votes while ensuring voter anonymity through a Mixnet-based algorithm, concealing the link between voters and their votes. The system employs a Two-Phase Commit (2PC) protocol to maintain data consistency across storage files, guaranteeing each transaction as either fully completed or rolled back in case of failure. An integrated admin panel allows authorized users to manage candidates, monitor voter activity, and oversee the voting ledger. All data is stored persistently in CSV files for candidates, voters, and votes, preserving records between sessions.    
 
 ## 🗳️ Project Overview   
 The Online Voting System allows users to:   
@@ -45,6 +45,7 @@ add
 
 ## 📝 License
 This project is developed for academic purposes under the University of Mindanao, College of Computing Education.
+
 
 
 
