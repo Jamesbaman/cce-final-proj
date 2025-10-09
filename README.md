@@ -4,7 +4,7 @@ A desktop-based Ballot Casting System implemented in Java Swing. This project de
 
 The system also integrates a Two-Phase Commit (2PC) protocol to maintain data consistency across all storage files, ensuring that each voting transaction is either fully completed or rolled back in case of failure.The system also provides an admin panel where authorized users can manage candidates, view voter status, and monitor the voting ledger. It supports persistent data storage through CSV files for candidates, registered voters, and votes, enabling the system to retain records between sessions.
 ## 🗳️ Project Overview
-The Online Voting System allows users to: \n
+The Online Voting System allows users to:   
 
 ⋅ Register and manage voter accounts.
 
