@@ -16,6 +16,20 @@ The Online Voting System allows users to:
 
 This version does not implement a database. Instead, all data is stored in .csv files located in the /src/final_proj/data directory.
 
+## Features
+
+• Secure voter registration, login, and ballot casting
+
+• Mixnet-based algorithm for maintaining voter anonymity
+
+• Two-Phase Commit (2PC) protocol for consistent and reliable vote transactions
+
+• Admin panel for managing candidates, viewing voter status, and monitoring the voting ledger
+
+• Persistent data storage using CSV files for candidates, voters, and votes
+
+• Real-time validation and confirmation of voting actions
+
 ## 👥 Team Members | Roles
 | Name | Role |
 |------|------|
@@ -49,6 +63,7 @@ add
 
 ## 📝 License
 This project is developed for academic purposes under the University of Mindanao, College of Computing Education.
+
 
 
 
