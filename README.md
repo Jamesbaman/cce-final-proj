@@ -14,7 +14,7 @@ The Online Voting System allows users to:
 
 This version does not implement a database. Instead, all data is stored in .csv files located in the /src/final_proj/data directory.
 
-## 👥 Team Members and Roles
+## 👥 Team Members | Roles
 | Name | Role |
 |------|------|
 | Daryl Aurelio | Front-End Designer / Presenter  |
@@ -22,6 +22,14 @@ This version does not implement a database. Instead, all data is stored in .csv 
 | Jhustine Caballero | Lead Programmer/ Framework Developer |
 | Andrei Domingo | UI Design / Documentation |
 | LJ Martin | Content Editor / Framework Coordinator |
+## 🖼️ Screenshots
+Screenshots are stored in the `/screenshots` folder.
+
+| Panel | Description | Screenshot |
+|--------|--------------|-------------|
+| Welcome Page | Main panel for unregistered voters  | ![Welcome Page](screenshots/welcomepage.png) |
+| Sign In | Starting panel for authentication | ![Sign In](screenshots/signin.png) |
+| Cast Your Vote | Panel to cast your vote for a candidate  | ![Cast Your Vote](screenshots/castyourvote.png) |
 
 ## Pending Integration
 votes.csv needs to have further privacy functions (make it unable to be read by the devs/admin)
@@ -33,4 +41,5 @@ add
 
 ## 📝 License
 This project is developed for academic purposes under the University of Mindanao, College of Computing Education.
+
 
