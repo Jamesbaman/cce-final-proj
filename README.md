@@ -26,7 +26,7 @@ This version does not implement a database. Instead, all data is stored in .csv 
 
 | Diagram Type | Description | Diagram |
 |---------------|--------------|----------|
-| Use Case Diagram | Illustrates how users may interact with core system functions | ![UML Diagram](uml/UML_Diagram.png) |
+| UML Diagram | Illustrates how the core system functions and the methods that support it | ![UML Diagram](uml/UML_Diagram.png) |
 
 ## 🖼️ Screenshots
 Screenshots are stored in the `/screenshots` folder.
@@ -47,6 +47,7 @@ add
 
 ## 📝 License
 This project is developed for academic purposes under the University of Mindanao, College of Computing Education.
+
 
 
 
