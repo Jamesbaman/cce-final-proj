@@ -22,8 +22,35 @@ public class cce_final_proj {
         private JPanel homePanel;
         private JPanel loginPanel;
         private JPanel sidebarPanel, headerPanel, mainContentPanel;
+<<<<<<< HEAD:src/cce_final_proj.java
         private JButton signInButton, registerButton, devButton, voteTallyButton;
         private JLabel welcomeLabel, forgotPasswordLabel, profileLabel;
+=======
+        private JButton signInButton, registerButton, devButton, voteTallyButton, doweeButton;  
+        @SuppressWarnings("unused")
+        private JLabel welcomeLabel, profileLabel;
+        
+        class GradientPanel extends JPanel {
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        Graphics2D g2d = (Graphics2D) g;
+        int width = getWidth();
+        int height = getHeight();
+
+        // Theme: Voting System - Secure and Progressive
+        Color color1 = new Color(56, 239, 125); // bright green (progress)
+        Color color2 = new Color(203, 195, 227); // light gold (stability)
+
+        GradientPaint gp = new GradientPaint(0, 0, color1, width, height, color2);
+        g2d.setPaint(gp);
+        g2d.fillRect(0, 0, width, height);
+        g2d.setColor(new Color(255, 255, 255, 30)); // white transparent layer
+        g2d.fillOval(width / 3, height / 4, width / 2, height / 2);
+    }
+}
+
+>>>>>>> pr-5:cce_final_proj.java
         // Create transactional voting object
         private TransactionalVotingSystem votingSystem;
         // constructor
@@ -31,7 +58,7 @@ public class cce_final_proj {
             this.votingSystem = votingSystem;
             votingSystem.mainFrame = this; // pass reference
             setTitle("Online Voting System");
-            setSize(1200, 800);
+            setSize(1200, 700);
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             setLocationRelativeTo(null);
             initializeComponents();
@@ -47,10 +74,10 @@ public class cce_final_proj {
             signInButton = new JButton("Sign in");
             registerButton = new JButton("Register");
             devButton = new JButton("Admin Panel");
+            doweeButton = new JButton("Software Use");
             voteTallyButton = new JButton("Vote Tally");
 
             welcomeLabel = new JLabel("WELCOME!");
-            forgotPasswordLabel = new JLabel("Forgot password?");
             profileLabel = new JLabel("PROFILE ▼");
         }
 
@@ -59,39 +86,36 @@ public class cce_final_proj {
             setLayout(new BorderLayout());
 
             // Sidebar
-            sidebarPanel.setLayout(new GridLayout(5, 1, 10, 10));
-            sidebarPanel.setBackground(Color.WHITE);
-            sidebarPanel.add(new JButton("Cast Vote"));
+            sidebarPanel.setLayout(new GridLayout(3, 1, 10, 10));
+            sidebarPanel.setBorder( BorderFactory.createEmptyBorder(20, 10, 20, 10));
+            sidebarPanel.setBackground(new Color(65, 237, 131));
             sidebarPanel.add(voteTallyButton);
-            sidebarPanel.add(new JButton("TBF"));
             sidebarPanel.add(devButton);
+            sidebarPanel.add(doweeButton);
             add(sidebarPanel, BorderLayout.WEST);
 
             // Header
-            headerPanel.setLayout(new BorderLayout());
-            headerPanel.setBackground(new Color(66, 133, 244));
-            JLabel titleLabel = new JLabel("Online Voting System");
-            titleLabel.setForeground(Color.WHITE);
-            titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
-            headerPanel.add(titleLabel, BorderLayout.WEST);
-
-            profileLabel.setForeground(Color.WHITE);
-            profileLabel.setFont(new Font("Arial", Font.PLAIN, 14));
-            profileLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-            headerPanel.add(profileLabel, BorderLayout.EAST);
-
-            add(headerPanel, BorderLayout.NORTH);
+                headerPanel = new GradientHeaderPanel("Online Voting System", new Font("Inter", Font.BOLD, 25));
+                add(headerPanel, BorderLayout.NORTH);
+	
 
             // Main content area
+<<<<<<< HEAD:src/cce_final_proj.java
             homePanel = new JPanel(new GridBagLayout());
             homePanel.setBackground(Color.LIGHT_GRAY);
             GridBagConstraints gbc = new GridBagConstraints();
+=======
+        homePanel = new GradientPanel();
+        homePanel.setLayout(new GridBagLayout());
+        homePanel.setBackground(Color.LIGHT_GRAY);
+        GridBagConstraints gbc = new GridBagConstraints();
+>>>>>>> pr-5:cce_final_proj.java
             gbc.gridx = 0;
             gbc.anchor = GridBagConstraints.CENTER;
             gbc.insets = new Insets(15, 10, 15, 10);
 
             // Welcome label
-            welcomeLabel.setFont(new Font("Arial", Font.BOLD, 72));
+            welcomeLabel.setFont(new Font("Segoe UI", Font.BOLD, 72));
             gbc.gridy = 0;
             homePanel.add(welcomeLabel, gbc);
 
@@ -114,12 +138,6 @@ public class cce_final_proj {
             gbc.gridy = 3;
             homePanel.add(registerButton, gbc);
 
-            // Forgot password link
-            forgotPasswordLabel.setForeground(Color.RED);
-            forgotPasswordLabel.setFont(new Font("Arial", Font.PLAIN, 14));
-            gbc.gridy = 4;
-            homePanel.add(forgotPasswordLabel, gbc);
-
             // Wrap homePanel inside mainContentPanel
             mainContentPanel.setLayout(new BorderLayout());
             mainContentPanel.add(homePanel, BorderLayout.CENTER);
@@ -131,6 +149,7 @@ public class cce_final_proj {
                 RegisterForm registerForm = new RegisterForm();
                 registerForm.setVisible(true);
             });
+<<<<<<< HEAD:src/cce_final_proj.java
 
             signInButton.addActionListener(new ActionListener() {
                 @Override
@@ -144,6 +163,28 @@ public class cce_final_proj {
                 VoteTally tallyFrame = new VoteTally(votingSystem);
                 tallyFrame.setVisible(true);
             });
+=======
+        
+            signInButton.addActionListener(new ActionListener() {
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        Loginform loginForm = new Loginform(OnlineVotingSystem.this.votingSystem);
+        loginForm.setVisible(true);
+    }
+});
+doweeButton.addActionListener(e -> {
+    JOptionPane.showMessageDialog(this,
+        "The Transactional Ballot Casting Voting System is a secure e-voting platform that ensures accuracy,\n"
+        + "transparency, and voter anonymity. It combines the Two-Phase Commit protocol for reliable transaction\n"
+        + "handling with a Mix-Net–Based Voting Algorithm to protect voter privacy. The system offers a user-friendly\n and efficient solution for conducting trustworthy digital elections." ,
+        "Software",
+        JOptionPane.INFORMATION_MESSAGE);
+});
+voteTallyButton.addActionListener(e -> {
+    VoteTally tallyFrame = new VoteTally(votingSystem);
+    tallyFrame.setVisible(true);
+});
+>>>>>>> pr-5:cce_final_proj.java
 
 // admin panel access (pass kay 123)
             devButton.addActionListener(e -> {
@@ -163,6 +204,7 @@ public class cce_final_proj {
 
         }
 
+<<<<<<< HEAD:src/cce_final_proj.java
         // admin panel
         private void showAdminPanel() {
             JDialog dialog = new JDialog(this, "Admin Panel", true);
@@ -198,6 +240,20 @@ public class cce_final_proj {
                 voterData[i][0] = entry.getKey();           // actual username
                 voterData[i][1] = entry.getValue().hasVoted; // true/false
                 i++;
+=======
+
+  
+    // Hash function for voter ID (used only in vote ledger)
+    java.util.function.Function<String, String> hashVoterId = voterId -> {
+        try {
+            java.security.MessageDigest digest = java.security.MessageDigest.getInstance("SHA-256");
+            byte[] encodedHash = digest.digest(voterId.getBytes());
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : encodedHash) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) hexString.append('0');
+                hexString.append(hex);
+>>>>>>> pr-5:cce_final_proj.java
             }
             JTable voterTable = new JTable(voterData, voterCols);
 
@@ -273,6 +329,95 @@ public class cce_final_proj {
 
             dialog.setVisible(true);
         }
+<<<<<<< HEAD:src/cce_final_proj.java
+=======
+    };
+
+    // Voter status table 
+   
+    String[] voterCols = {"Voter Username", "Has Voted"};
+    Object[][] voterData = new Object[votingSystem.registeredVoters.size()][2];
+    int i = 0;
+    for (Map.Entry<String, TransactionalVotingSystem.Voter> entry : votingSystem.registeredVoters.entrySet()) {
+        voterData[i][0] = entry.getKey();           // actual username
+        voterData[i][1] = entry.getValue().hasVoted; // true/false
+        i++;
+    }
+    JTable voterTable = new JTable(voterData, voterCols);
+
+    
+    // Ballot ledger table (hashed voter ID + candidate + timestamp)
+   
+    String[] ballotCols = {"Voter ID (Hashed)", "Candidate", "Timestamp"};
+    Object[][] ballotData = new Object[votingSystem.ballotLedger.size()][3];
+    i = 0;
+    for (TransactionalVotingSystem.Ballot b : votingSystem.ballotLedger) {
+        ballotData[i][0] = hashVoterId.apply(b.voterId); // hashed ID
+        ballotData[i][1] = b.candidate;
+        ballotData[i][2] = b.timestamp.toString();
+        i++;
+    }
+    JTable ballotTable = new JTable(ballotData, ballotCols);
+
+  
+    // Add both tables to a panel
+   
+    JPanel tablesPanel = new JPanel(new GridLayout(2, 1, 10, 10));
+    tablesPanel.add(new JScrollPane(voterTable));
+    tablesPanel.add(new JScrollPane(ballotTable));
+
+    dialog.add(tablesPanel, BorderLayout.CENTER);
+
+    
+    // Add Candidate Panel
+    
+    JPanel addCandidatePanel = new JPanel(new FlowLayout());
+    JTextField candidateNameField = new JTextField(15);
+    JButton selectImageButton = new JButton("Select Image");
+    JLabel selectedImageLabel = new JLabel("No image selected");
+    JButton addCandidateButton = new JButton("Add Candidate");
+
+    addCandidatePanel.add(new JLabel("Candidate Name:"));
+    addCandidatePanel.add(candidateNameField);
+    addCandidatePanel.add(selectImageButton);
+    addCandidatePanel.add(selectedImageLabel);
+    addCandidatePanel.add(addCandidateButton);
+
+    dialog.add(addCandidatePanel, BorderLayout.NORTH);
+    
+    // Image selection
+    final String[] imagePath = {null};
+    selectImageButton.addActionListener(ev -> {
+        JFileChooser fileChooser = new JFileChooser();
+        int option = fileChooser.showOpenDialog(dialog);
+        if (option == JFileChooser.APPROVE_OPTION) {
+            imagePath[0] = fileChooser.getSelectedFile().getAbsolutePath();
+            selectedImageLabel.setText(fileChooser.getSelectedFile().getName());
+        }
+    });
+
+    // Add candidate action
+    addCandidateButton.addActionListener(ev -> {
+        String name = candidateNameField.getText().trim();
+        if (name.isEmpty() || imagePath[0] == null) {
+            JOptionPane.showMessageDialog(dialog, "Please enter a name and select an image.");
+            return;
+        }
+        votingSystem.addCandidate(name, imagePath[0]);
+        votingSystem.saveCandidatesToFile();
+        JOptionPane.showMessageDialog(dialog, "Candidate added: " + name);
+        candidateNameField.setText("");
+        selectedImageLabel.setText("No image selected");
+    });
+
+    // Close button
+    JButton closeBtn = new JButton("Close");
+    closeBtn.addActionListener(ev -> dialog.dispose());
+    dialog.add(closeBtn, BorderLayout.SOUTH);
+
+    dialog.setVisible(true);
+}
+>>>>>>> pr-5:cce_final_proj.java
 
         // Classes for transactional voting system
         public static void main(String[] args) {
@@ -288,8 +433,63 @@ public class cce_final_proj {
             });
         }
     }
+    
+    static class GradientHeaderPanel extends JPanel {
+    private String title;
+    private Font font;
+
+<<<<<<< HEAD:src/cce_final_proj.java
+
+=======
+    public GradientHeaderPanel(String title, Font font) {
+        this.title = title;
+        this.font = font;
+        setPreferredSize(new Dimension(0, 60));
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        Graphics2D g2d = (Graphics2D) g.create();
+
+        int width = getWidth();
+        int height = getHeight();
+
+       
+        Color color1 = new Color(0x40, 0xed, 0x82); // #40ed82
+        Color color2 = new Color(0xa3, 0xce, 0xc7); // #a3cec7
+        GradientPaint gp = new GradientPaint(0, 0, color1, width, height, color2);
+        g2d.setPaint(gp);
+        g2d.fillRect(0, 0, width, height);
+
+        g2d.setColor(new Color(255, 255, 255, 30));
+        g2d.fillOval(width / 4, height / 4, width / 2, height / 2);
+
+       
+        g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
+                             RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+
+        // title text
+        g2d.setFont(font);
+        FontMetrics fm = g2d.getFontMetrics();
+        int x = 20;
+        int y = (height - fm.getHeight()) / 2 + fm.getAscent();
+
+        // subtle shadow
+        g2d.setColor(new Color(0, 0, 0, 50));
+        g2d.drawString(title, x + 2, y + 2);
+
+        g2d.setColor(Color.BLACK);
+        g2d.drawString(title, x, y);
+
+        g2d.dispose();
+    }
+}
 
 
+
+    
+>>>>>>> pr-5:cce_final_proj.java
     // Register Form
     public static class RegisterForm extends JFrame {
         private JTextField usernameField, emailField, firstNameField, lastNameField;
