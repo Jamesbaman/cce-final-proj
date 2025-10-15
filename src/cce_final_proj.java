@@ -1,5 +1,5 @@
 //ignore sa ang package
-
+    
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -13,19 +13,11 @@ import java.util.Scanner;
 
 public class cce_final_proj {
 
-
+  
     // MAIN FRAME
-
+    
     public static class OnlineVotingSystem extends JFrame {
-        private CardLayout cardLayout;
-        private JPanel mainPanel;
-        private JPanel homePanel;
-        private JPanel loginPanel;
         private JPanel sidebarPanel, headerPanel, mainContentPanel;
-<<<<<<< HEAD:src/cce_final_proj.java
-        private JButton signInButton, registerButton, devButton, voteTallyButton;
-        private JLabel welcomeLabel, forgotPasswordLabel, profileLabel;
-=======
         private JButton signInButton, registerButton, devButton, voteTallyButton, doweeButton;  
         @SuppressWarnings("unused")
         private JLabel welcomeLabel, profileLabel;
@@ -50,7 +42,6 @@ public class cce_final_proj {
     }
 }
 
->>>>>>> pr-5:cce_final_proj.java
         // Create transactional voting object
         private TransactionalVotingSystem votingSystem;
         // constructor
@@ -81,7 +72,8 @@ public class cce_final_proj {
             profileLabel = new JLabel("PROFILE ▼");
         }
 
-
+        private JPanel homePanel;
+        
         private void setupLayout() {
             setLayout(new BorderLayout());
 
@@ -100,16 +92,10 @@ public class cce_final_proj {
 	
 
             // Main content area
-<<<<<<< HEAD:src/cce_final_proj.java
-            homePanel = new JPanel(new GridBagLayout());
-            homePanel.setBackground(Color.LIGHT_GRAY);
-            GridBagConstraints gbc = new GridBagConstraints();
-=======
         homePanel = new GradientPanel();
         homePanel.setLayout(new GridBagLayout());
         homePanel.setBackground(Color.LIGHT_GRAY);
         GridBagConstraints gbc = new GridBagConstraints();
->>>>>>> pr-5:cce_final_proj.java
             gbc.gridx = 0;
             gbc.anchor = GridBagConstraints.CENTER;
             gbc.insets = new Insets(15, 10, 15, 10);
@@ -142,28 +128,13 @@ public class cce_final_proj {
             mainContentPanel.setLayout(new BorderLayout());
             mainContentPanel.add(homePanel, BorderLayout.CENTER);
             add(mainContentPanel, BorderLayout.CENTER);
-        }
+                    }
 
         private void configureComponents() {
             registerButton.addActionListener(e -> {
                 RegisterForm registerForm = new RegisterForm();
                 registerForm.setVisible(true);
             });
-<<<<<<< HEAD:src/cce_final_proj.java
-
-            signInButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    Loginform loginForm = new Loginform(OnlineVotingSystem.this.votingSystem);
-                    loginForm.setVisible(true);
-                }
-            });
-
-            voteTallyButton.addActionListener(e -> {
-                VoteTally tallyFrame = new VoteTally(votingSystem);
-                tallyFrame.setVisible(true);
-            });
-=======
         
             signInButton.addActionListener(new ActionListener() {
     @Override
@@ -184,63 +155,46 @@ voteTallyButton.addActionListener(e -> {
     VoteTally tallyFrame = new VoteTally(votingSystem);
     tallyFrame.setVisible(true);
 });
->>>>>>> pr-5:cce_final_proj.java
 
 // admin panel access (pass kay 123)
-            devButton.addActionListener(e -> {
-                String pswd = JOptionPane.showInputDialog("Enter admin password:");
-                if ("123".equals(pswd)) { // simple password check
-                    votingSystem.loadCandidatesFromFile();
-                    votingSystem.loadRegisteredUsersFromFile();
-                    votingSystem.loadVotesFromFile();
-                    showAdminPanel(); // method to display panel
-                    dispose();
-                } else {
-                    JOptionPane.showMessageDialog(null, "Incorrect password!");
-                }
-            });
+devButton.addActionListener(e -> {
+    JPasswordField passwordField = new JPasswordField();
+    Object[] message = {
+        "Enter admin password:", passwordField
+    };
+    
+    int option = JOptionPane.showConfirmDialog(
+        null,
+        message,
+        "Admin Login",
+        JOptionPane.OK_CANCEL_OPTION,
+        JOptionPane.PLAIN_MESSAGE
+    );
 
+    if (option == JOptionPane.OK_OPTION) {
+        // Get password from the field
+        String pswd = new String(passwordField.getPassword());
 
+        if ("123".equals(pswd)) { // simple password check
+            votingSystem.loadRegisteredUsersFromFile();
+            votingSystem.loadCandidatesFromFile();
+            votingSystem.loadVotesFromFile();
+            showAdminPanel(); // method to display panel
+        } else {
+            JOptionPane.showMessageDialog(null, "Incorrect password!");
+        }
+    }
+});
 
         }
+    
+    // admin panel
+   private void showAdminPanel() {
+    JDialog dialog = new JDialog(this, "Admin Panel", true);
+    dialog.setSize(900, 600);
+    dialog.setLocationRelativeTo(this);
+    dialog.setLayout(new BorderLayout(10, 10));
 
-<<<<<<< HEAD:src/cce_final_proj.java
-        // admin panel
-        private void showAdminPanel() {
-            JDialog dialog = new JDialog(this, "Admin Panel", true);
-            dialog.setSize(900, 600);
-            dialog.setLocationRelativeTo(this);
-            dialog.setLayout(new BorderLayout(10, 10));
-
-
-            // Hash function for voter ID (used only in vote ledger)
-            java.util.function.Function<String, String> hashVoterId = voterId -> {
-                try {
-                    java.security.MessageDigest digest = java.security.MessageDigest.getInstance("SHA-256");
-                    byte[] encodedHash = digest.digest(voterId.getBytes());
-                    StringBuilder hexString = new StringBuilder();
-                    for (byte b : encodedHash) {
-                        String hex = Integer.toHexString(0xff & b);
-                        if (hex.length() == 1) hexString.append('0');
-                        hexString.append(hex);
-                    }
-                    return hexString.toString().substring(0, 8); // only first 8 chars
-                } catch (java.security.NoSuchAlgorithmException e) {
-                    e.printStackTrace();
-                    return "ERROR";
-                }
-            };
-
-            // Voter status table
-
-            String[] voterCols = {"Voter Username", "Has Voted"};
-            Object[][] voterData = new Object[votingSystem.registeredVoters.size()][2];
-            int i = 0;
-            for (Map.Entry<String, TransactionalVotingSystem.Voter> entry : votingSystem.registeredVoters.entrySet()) {
-                voterData[i][0] = entry.getKey();           // actual username
-                voterData[i][1] = entry.getValue().hasVoted; // true/false
-                i++;
-=======
 
   
     // Hash function for voter ID (used only in vote ledger)
@@ -253,84 +207,12 @@ voteTallyButton.addActionListener(e -> {
                 String hex = Integer.toHexString(0xff & b);
                 if (hex.length() == 1) hexString.append('0');
                 hexString.append(hex);
->>>>>>> pr-5:cce_final_proj.java
             }
-            JTable voterTable = new JTable(voterData, voterCols);
-
-
-            // Ballot ledger table (hashed voter ID + candidate + timestamp)
-
-            String[] ballotCols = {"Voter ID (Hashed)", "Candidate", "Timestamp"};
-            Object[][] ballotData = new Object[votingSystem.ballotLedger.size()][3];
-            i = 0;
-            for (TransactionalVotingSystem.Ballot b : votingSystem.ballotLedger) {
-                ballotData[i][0] = hashVoterId.apply(b.voterId); // hashed ID
-                ballotData[i][1] = b.candidate;
-                ballotData[i][2] = b.timestamp.toString();
-                i++;
-            }
-            JTable ballotTable = new JTable(ballotData, ballotCols);
-
-
-            // Add both tables to a panel
-
-            JPanel tablesPanel = new JPanel(new GridLayout(2, 1, 10, 10));
-            tablesPanel.add(new JScrollPane(voterTable));
-            tablesPanel.add(new JScrollPane(ballotTable));
-
-            dialog.add(tablesPanel, BorderLayout.CENTER);
-
-
-            // Add Candidate Panel
-
-            JPanel addCandidatePanel = new JPanel(new FlowLayout());
-            JTextField candidateNameField = new JTextField(15);
-            JButton selectImageButton = new JButton("Select Image");
-            JLabel selectedImageLabel = new JLabel("No image selected");
-            JButton addCandidateButton = new JButton("Add Candidate");
-
-            addCandidatePanel.add(new JLabel("Candidate Name:"));
-            addCandidatePanel.add(candidateNameField);
-            addCandidatePanel.add(selectImageButton);
-            addCandidatePanel.add(selectedImageLabel);
-            addCandidatePanel.add(addCandidateButton);
-
-            dialog.add(addCandidatePanel, BorderLayout.NORTH);
-
-            // Image selection
-            final String[] imagePath = {null};
-            selectImageButton.addActionListener(ev -> {
-                JFileChooser fileChooser = new JFileChooser();
-                int option = fileChooser.showOpenDialog(dialog);
-                if (option == JFileChooser.APPROVE_OPTION) {
-                    imagePath[0] = fileChooser.getSelectedFile().getAbsolutePath();
-                    selectedImageLabel.setText(fileChooser.getSelectedFile().getName());
-                }
-            });
-
-            // Add candidate action
-            addCandidateButton.addActionListener(ev -> {
-                String name = candidateNameField.getText().trim();
-                if (name.isEmpty() || imagePath[0] == null) {
-                    JOptionPane.showMessageDialog(dialog, "Please enter a name and select an image.");
-                    return;
-                }
-                votingSystem.addCandidate(name, imagePath[0]);
-                votingSystem.saveCandidatesToFile();
-                JOptionPane.showMessageDialog(dialog, "Candidate added: " + name);
-                candidateNameField.setText("");
-                selectedImageLabel.setText("No image selected");
-            });
-
-            // Close button
-            JButton closeBtn = new JButton("Close");
-            closeBtn.addActionListener(ev -> dialog.dispose());
-            dialog.add(closeBtn, BorderLayout.SOUTH);
-
-            dialog.setVisible(true);
+            return hexString.toString().substring(0, 8); // only first 8 chars
+        } catch (java.security.NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return "ERROR";
         }
-<<<<<<< HEAD:src/cce_final_proj.java
-=======
     };
 
     // Voter status table 
@@ -396,19 +278,48 @@ voteTallyButton.addActionListener(e -> {
         }
     });
 
-    // Add candidate action
-    addCandidateButton.addActionListener(ev -> {
-        String name = candidateNameField.getText().trim();
-        if (name.isEmpty() || imagePath[0] == null) {
-            JOptionPane.showMessageDialog(dialog, "Please enter a name and select an image.");
-            return;
-        }
-        votingSystem.addCandidate(name, imagePath[0]);
+  addCandidateButton.addActionListener(ev -> {
+    String name = candidateNameField.getText().trim();
+    if (name.isEmpty() || imagePath[0] == null) {
+        JOptionPane.showMessageDialog(dialog, "Please enter a name and select an image.");
+        return;
+    }
+
+    try {
+        // Create ImagesCandidates folder if it doesn’t exist
+        File destFolder = new File("ImagesCandidates");
+        if (!destFolder.exists()) destFolder.mkdir();
+
+        // Extract just the file name from the chosen image
+        File chosenFile = new File(imagePath[0]);
+        String fileName = chosenFile.getName();
+
+        // Destination inside your project
+        File destFile = new File(destFolder, fileName);
+
+        // Copy image from wherever it was chosen → to your project
+        java.nio.file.Files.copy(
+            chosenFile.toPath(),
+            destFile.toPath(),
+            java.nio.file.StandardCopyOption.REPLACE_EXISTING
+        );
+
+        // Now store only the relative path
+        String relativePath = "ImagesCandidates/" + fileName;
+
+        // Add candidate and save
+        votingSystem.addCandidate(name, relativePath);
         votingSystem.saveCandidatesToFile();
+
         JOptionPane.showMessageDialog(dialog, "Candidate added: " + name);
         candidateNameField.setText("");
         selectedImageLabel.setText("No image selected");
-    });
+
+    } catch (IOException ex) {
+        JOptionPane.showMessageDialog(dialog, "Error copying image: " + ex.getMessage());
+    }
+});
+
 
     // Close button
     JButton closeBtn = new JButton("Close");
@@ -417,17 +328,16 @@ voteTallyButton.addActionListener(e -> {
 
     dialog.setVisible(true);
 }
->>>>>>> pr-5:cce_final_proj.java
 
         // Classes for transactional voting system
         public static void main(String[] args) {
             System.out.println("Current working dir: " + new File(".").getAbsolutePath());
             SwingUtilities.invokeLater(() -> {
-
-                TransactionalVotingSystem votingSystem = new
-                        TransactionalVotingSystem();
+                
+            TransactionalVotingSystem votingSystem = new 
+            TransactionalVotingSystem();
                 votingSystem.loadCandidatesFromFile();
-                votingSystem.loadVotesFromFile();
+                votingSystem.loadVotesFromFile(); 
                 OnlineVotingSystem frame = new OnlineVotingSystem(votingSystem);
                 frame.setVisible(true);
             });
@@ -438,9 +348,6 @@ voteTallyButton.addActionListener(e -> {
     private String title;
     private Font font;
 
-<<<<<<< HEAD:src/cce_final_proj.java
-
-=======
     public GradientHeaderPanel(String title, Font font) {
         this.title = title;
         this.font = font;
@@ -489,12 +396,11 @@ voteTallyButton.addActionListener(e -> {
 
 
     
->>>>>>> pr-5:cce_final_proj.java
     // Register Form
     public static class RegisterForm extends JFrame {
         private JTextField usernameField, emailField, firstNameField, lastNameField;
         private JPasswordField passwordField, confirmPasswordField;
-
+        
 
         public RegisterForm() {
             setTitle("Register");
@@ -560,27 +466,27 @@ voteTallyButton.addActionListener(e -> {
                     JOptionPane.showMessageDialog(this, "Passwords do not match!", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-                File usersFile = new File("users.csv");
+                 File usersFile = new File("users.csv");
                 boolean usernameExists = false;
-                if (usersFile.exists()) {
-                    try (Scanner sc = new Scanner(usersFile)) {
-                        while (sc.hasNextLine()) {
-                            String[] data = sc.nextLine().split(",");
-                            if (data.length > 0 && data[0].trim().equalsIgnoreCase(username)) {
-                                usernameExists = true;
-                                break;
-                            }
-                        }
-                    } catch (IOException ex) {
-                        JOptionPane.showMessageDialog(this, "Error reading users.csv: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                        return;
-                    }
+             if (usersFile.exists()) {
+             try (Scanner sc = new Scanner(usersFile)) {
+                while (sc.hasNextLine()) {
+                String[] data = sc.nextLine().split(",");
+             if (data.length > 0 && data[0].trim().equalsIgnoreCase(username)) {
+                usernameExists = true;
+                break;
                 }
+            }
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error reading users.csv: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        }
 
-                if (usernameExists) {
-                    JOptionPane.showMessageDialog(this, "Username already exists! Choose another.", "Error", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
+    if (usernameExists) {
+        JOptionPane.showMessageDialog(this, "Username already exists! Choose another.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
                 try (FileWriter fw = new FileWriter("users.csv", true)) {
                     fw.write(username + "," + email + "," + firstName + "," + lastName + "," + password + "\n");
@@ -594,6 +500,5 @@ voteTallyButton.addActionListener(e -> {
             backButton.addActionListener(e -> dispose());
         }
     }
-
-}
-
+    
+} 
