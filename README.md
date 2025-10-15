@@ -1,7 +1,7 @@
 # Transactional Ballot Casting Voting System
 A desktop-based Ballot Casting System built with Java Swing, designed for secure and user-friendly electronic voting. It enables users to register, log in, and cast votes while ensuring voter anonymity through a Mixnet-based algorithm, concealing the link between voters and their votes. A Two-Phase Commit (2PC) protocol is also applied to maintain data consistency across storage files, guaranteeing each transaction as either fully completed or rolled back in case of failure. An integrated admin panel allows authorized users to manage candidates, monitor voter activity, and oversee the voting ledger. All data is stored persistently in CSV files for candidates, voters, and votes, preserving records between sessions.    
 
-## 🗳️ Project Overview   
+## Project Overview   
 The Online Voting System allows users to:   
 
 • Register and manage voter accounts.
@@ -16,7 +16,7 @@ The Online Voting System allows users to:
 
 This version does not implement a database. Instead, all data is stored in .csv files located in the /src/final_proj/data directory.
 
-## 🧑‍💻 Team Members | Roles
+## Team Members | Roles
 | Name | Role |
 |------|------|
 | Daryl Aurelio | Front-End Designer / Presenter  |
@@ -25,7 +25,7 @@ This version does not implement a database. Instead, all data is stored in .csv 
 | Andrei Domingo | UI Design / Documentation |
 | LJ Martin | Content Editor / Framework Coordinator |
 
-## ⚙️ Features
+## Features
 
 • Secure voter registration, login, and ballot casting
 
@@ -39,7 +39,7 @@ This version does not implement a database. Instead, all data is stored in .csv 
 
 • Real-time validation and confirmation of voting actions
 
-## ⚙️ How to Run the Project
+## How to Run the Project
 1. Clone the repository:
    ```bash
    git clone https://github.com/Jamesbaman/cce-final-proj.git
@@ -47,17 +47,18 @@ This version does not implement a database. Instead, all data is stored in .csv 
 2. Open the project in your preferred IDE (e.g., NetBeans, IntelliJ IDEA).
 3. Run the `cce-final-proj.java` file.
 
-## 🧾 Screenshots
+##  Screenshots
 Screenshots are stored in the `/screenshots` folder.
 
-## 📊 UML Diagram
+##  UML Diagram
 
 | Diagram Type | Description | Diagram |
 |---------------|--------------|----------|
 | Entity Relationship Diagram | Illustrates how the core system functions and the methods that support it | ![UML Diagram](uml/UML_Diagram.png) |
 
-## 📝 License
+##  License
 This project is developed for academic purposes under the University of Mindanao, College of Computing Education.
+
 
 
 
