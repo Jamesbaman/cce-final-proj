@@ -50,28 +50,15 @@ This version does not implement a database. Instead, all data is stored in .csv 
 ## 🧾 Screenshots
 Screenshots are stored in the `/screenshots` folder.
 
-| Panel | Description | Screenshot |
-|--------|--------------|-------------|
-| Welcome Page | Main panel for unregistered voters  | ![Welcome Page](screenshots/welcomepage.png) |
-| Sign In | Starting panel for authentication | ![Sign In](screenshots/signin.png) |
-| Cast Your Vote | Panel to cast your vote for a candidate  | ![Cast Your Vote](screenshots/castyourvote.png) |
-
 ## 📊 UML Diagram
 
 | Diagram Type | Description | Diagram |
 |---------------|--------------|----------|
 | Entity Relationship Diagram | Illustrates how the core system functions and the methods that support it | ![UML Diagram](uml/UML_Diagram.png) |
 
-## Pending Integration
-votes.csv needs to have further privacy functions (make it unable to be read by the devs/admin)
--> for now, due to testing it is visible
-Make an admin function to delete candidates
-Adjust vote tally / voting form ui to be more aesthetically pleasing
-Time complexity and Storage Complexity (show time elapsed to how the program ran in ms/nanos/etc)
-add 
-
 ## 📝 License
 This project is developed for academic purposes under the University of Mindanao, College of Computing Education.
+
 
 
 
